@@ -406,6 +406,9 @@ svg.i{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:2;stroke-l
 .rdet p{margin:0}
 .cancelled{background:#fbeceb;border:1px solid #f0c3be;color:#7a1710;border-radius:14px;padding:14px 16px;margin-top:16px}
 .done .act{justify-content:center;margin-top:8px}
+.cxbox{margin-top:22px;padding-top:18px;border-top:1px solid var(--line)}
+.cxbox select{width:auto;max-width:100%;margin:6px 0 12px}
+.cxbox p{margin:0}
 </style>
 </head>
 <body>
@@ -583,7 +586,7 @@ svg.i{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:2;stroke-l
         <h2 class="sec-h" style="margin-bottom:.2em">Thank you!</h2>
         <p class="id" id="done-id"></p>
         <p id="done-meta" style="color:var(--ink);font-weight:600;margin-bottom:0"></p>
-        <p>Your order is placed. We will confirm the price and delivery time by phone, and email you once it is delivered.</p>
+        <p>Your order is placed. We will confirm the price and delivery time by phone, and email you once it is delivered. You can cancel it from the Track order page until we dispatch it.</p>
         <div class="act"><button class="btn" type="button" id="done-track">Track this order</button><button class="btn ghost" type="button" id="again">Order more greens</button></div>
       </div>
     </div>
@@ -1248,11 +1251,34 @@ function trackLookup(){
     .catch(function(){ err.textContent = "We could not check the status right now. Please try again."; })
     .then(function(){ b.disabled = false; b.textContent = "Check status"; });
 }
+function cancelBlock(r, cancelled){
+  if (cancelled || r.status === "Delivered") return "";
+  if (r.canCancel) return '<div class="cxbox"><p class="lbl">Changed your mind?</p><p style="margin-bottom:10px">You can cancel this order until we dispatch it.</p><button class="btn ghost" type="button" id="t-cancel">Cancel this order</button></div>';
+  return '<div class="cxbox"><p class="field-note">Your order has already been dispatched, so it can no longer be cancelled here.' + (WHATSAPP ? ' To change it, <a href="' + waLink("Hi Grownezzz, about my order " + r.orderId) + '" target="_blank" rel="noopener" style="color:var(--acc-dark);font-weight:600">message us on WhatsApp</a>.' : ' Please contact us if you need to change it.') + '</p></div>';
+}
+function openCancel(){
+  var box = document.querySelector(".cxbox"); if (!box) return;
+  box.innerHTML = '<p class="lbl">Why are you cancelling?</p><select id="t-reason"><option>Ordered by mistake</option><option>Changed my mind</option><option>The delivery day or time does not suit me</option><option>I want to change my order</option><option>Other</option></select>' +
+    '<div class="act"><button class="btn" type="button" id="t-cancel-yes">Yes, cancel my order</button><button class="btn ghost" type="button" id="t-cancel-no">Keep my order</button></div><p class="err" id="t-cerr" role="alert"></p>';
+}
+function doCancel(){
+  var id = $("#t-id").value.trim().toUpperCase(), ph = $("#t-phone").value.replace(/\D/g, "").slice(-10), b = $("#t-cancel-yes"), err = $("#t-cerr");
+  b.disabled = true; b.textContent = "Cancelling…"; err.textContent = "";
+  callApi("cancel", {id:id, phone:ph, reason:$("#t-reason").value}).then(function(r){
+    if (r && r.ok) { track("cancel_order", {transaction_id:id}); trackLookup(); return; }
+    err.textContent = r && r.error === "too late" ? "Sorry, this order has just been dispatched, so it can no longer be cancelled here." : "We could not cancel this order. Please try again or contact us.";
+    b.disabled = false; b.textContent = "Yes, cancel my order";
+  }).catch(function(){ err.textContent = "We could not cancel this order right now. Please try again."; b.disabled = false; b.textContent = "Yes, cancel my order"; });
+}
 function renderTrack(r){
   var idx = STAGES.indexOf(r.status), cancelled = r.status === "Cancelled", all = idx === 3;
   var times = [r.orderedAt, r.dispatchedAt, r.reachedAt, r.deliveredAt];
   var h = '<div class="rhead"><div><p class="lbl">Order</p><h3>' + esc(r.orderId) + '</h3></div><span class="badge-s' + (cancelled ? " bad" : "") + '">' + esc(r.status) + '</span></div>';
-  if (cancelled) h += '<div class="cancelled">This order was cancelled. Please contact us if you have any questions.</div>';
+  if (cancelled) {
+    var who = r.cancelledBy === "Customer" ? "You cancelled this order" + (r.cancelledAt ? " on " + r.cancelledAt : "") + ". Nothing is due." : "This order was cancelled by Grownezzz" + (r.cancelledAt ? " on " + r.cancelledAt : "") + ". Please contact us if you have any questions.";
+    if (r.cancelReason && r.cancelledBy !== "Customer") who += " Reason: " + r.cancelReason;
+    h += '<div class="cancelled">' + esc(who) + '</div>';
+  }
   else {
     h += '<p class="rmsg">Hi ' + esc(r.name) + ', ' + (STAGE_MSG[r.status] || "") + '</p><ol class="trk">' + STAGES.map(function(s, i){
       var cls = (i < idx || all) ? "is-done" : i === idx ? "is-cur" : "is-todo";
@@ -1262,11 +1288,16 @@ function renderTrack(r){
   h += '<div class="rdet"><div><p class="lbl">Preferred delivery</p><p>' + esc(r.day) + '<br>' + esc(r.slot) + '</p></div>' +
        '<div><p class="lbl">Total</p><p>' + rupee(r.total) + (r.discount ? '<br><span style="color:var(--acc-dark)">Launch offer −' + rupee(r.discount) + ' included</span>' : '') + '</p></div>' +
        '<div style="grid-column:1/-1"><p class="lbl">Items</p><p>' + esc(r.items).replace(/\n/g, "<br>") + '</p></div></div>' +
-       '<div class="act" style="margin-top:18px"><button class="btn ghost" type="button" id="t-refresh">Refresh status</button></div>';
+       cancelBlock(r, cancelled) + '<div class="act" style="margin-top:18px"><button class="btn ghost" type="button" id="t-refresh">Refresh status</button></div>';
   var box = $("#t-res"); box.innerHTML = h; box.hidden = false;
 }
 $("#t-go").addEventListener("click", trackLookup);
-$("#t-res").addEventListener("click", function(e){ if (e.target.closest("#t-refresh")) trackLookup(); });
+$("#t-res").addEventListener("click", function(e){
+  if (e.target.closest("#t-refresh")) trackLookup();
+  else if (e.target.closest("#t-cancel")) openCancel();
+  else if (e.target.closest("#t-cancel-yes")) doCancel();
+  else if (e.target.closest("#t-cancel-no")) trackLookup();
+});
 ["#t-id", "#t-phone"].forEach(function(s){ $(s).addEventListener("keydown", function(e){ if (e.key === "Enter") trackLookup(); }); });
 $("#done-track").addEventListener("click", function(){
   $("#t-id").value = this.dataset.id || ""; $("#t-phone").value = this.dataset.phone || ""; $("#t-res").hidden = true; show("track"); trackLookup();
