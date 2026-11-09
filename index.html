@@ -458,12 +458,6 @@ html{scroll-padding-top:calc(var(--navh) + 12px)}
 .ticker{display:flex;align-items:center;height:36px;background:var(--forest2);border-top:1px solid rgba(250,243,220,.1);color:var(--cream);overflow:hidden}
 .tk-label{flex:none;display:flex;align-items:center;height:100%;padding:0 16px 0 20px;background:var(--forest2);font:600 10px var(--mont);letter-spacing:.2em;text-transform:uppercase;color:var(--acc);position:relative;z-index:2;box-shadow:12px 0 14px -6px var(--forest2)}
 .tk-view{flex:1;overflow:hidden;position:relative;-webkit-mask-image:linear-gradient(90deg,transparent,#000 36px,#000 calc(100% - 36px),transparent);mask-image:linear-gradient(90deg,transparent,#000 36px,#000 calc(100% - 36px),transparent)}
-.tk-track{display:inline-flex;white-space:nowrap;animation:tk var(--tk-dur,50s) linear infinite;will-change:transform}
-.ticker:hover .tk-track{animation-play-state:paused}
-.tk-item{padding-right:64px;font-size:13px;color:rgba(250,243,220,.92)}
-.tk-item i{font-style:normal;color:var(--acc);margin-right:12px}
-@keyframes tk{to{transform:translateX(-50%)}}
-@media (prefers-reduced-motion: reduce){.tk-track{animation:none!important;white-space:normal}.ticker{height:auto;min-height:36px;padding:6px 0}.tk-view{-webkit-mask-image:none;mask-image:none}}
 @media (max-width:560px){.lockup .logo,.brand .logo{height:32px}.lg-tag{font-size:8px;letter-spacing:.28em}.ticker{height:34px}.tk-label{padding:0 12px 0 14px}}
 .pad{padding-top:calc(var(--navh) + 32px)}
 
@@ -568,25 +562,6 @@ body{background:var(--bg)}
 .pr-note{color:var(--muted)}
 .tk-label,.f-eyebrow{color:var(--acc)}
 .badge{box-shadow:0 0 0 2px var(--forest)}
-/* business section */
-.biz{position:relative;overflow:hidden;color:var(--bg);padding:clamp(64px,8vw,112px) 0;background:radial-gradient(ellipse 60% 70% at 85% 20%,rgba(198,244,50,.1),transparent 60%),linear-gradient(165deg,#1E3F20,#142C16)}
-.biz-grid{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,5vw,76px);align-items:center}
-@media (max-width:900px){.biz-grid{grid-template-columns:1fr}}
-.biz .kicker{color:var(--acc)}
-.biz h2{font-family:var(--display);font-weight:500;font-size:clamp(2rem,4vw,3.2rem);line-height:1.1;letter-spacing:-.012em;margin:0 0 16px;color:var(--bg)}
-.biz .lead{color:rgba(250,243,220,.78);max-width:48ch;margin:0 0 26px;font-size:1.05rem}
-.biz-list{list-style:none;margin:0;padding:0;display:grid;gap:14px}
-.biz-list li{display:flex;gap:14px;align-items:flex-start;color:rgba(250,243,220,.94)}
-.biz-list i{flex:none;width:24px;height:24px;border-radius:50%;background:var(--acc);color:var(--acc-ink);display:grid;place-items:center;font-style:normal;font-size:12px;font-weight:800;margin-top:2px}
-.biz-card{background:var(--panel);color:var(--ink);border-radius:28px;padding:clamp(22px,3vw,36px);box-shadow:0 44px 80px -40px rgba(0,0,0,.65)}
-.biz-card h3{font-family:var(--display);font-weight:500;font-size:1.8rem;margin:0 0 4px;letter-spacing:-.01em}
-.sub2{margin:0 0 6px;color:var(--muted)}
-.bz-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-@media (max-width:600px){.bz-row{grid-template-columns:1fr}}
-.biz-card .field{margin-top:14px}
-.bz-msg{margin:12px 0 0;min-height:1.3em;font-size:14px;color:var(--muted)}
-.bz-msg.good{color:var(--acc-dark);font-weight:600}
-.bz-msg.bad{color:#b3261e}
 /* floating contact button */
 .fab{position:fixed;right:18px;bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:35;display:flex;align-items:center;gap:8px;background:var(--acc);color:var(--acc-ink);border:0;border-radius:999px;padding:13px 20px;font-weight:700;font-size:15px;box-shadow:0 16px 32px -10px rgba(0,0,0,.5);transition:transform .2s,filter .2s}
 .fab:hover{transform:translateY(-2px);filter:brightness(1.05)}
@@ -647,6 +622,25 @@ html.intro-on .intro{display:grid;animation:introSafe .01s 4.5s forwards}
 @media (hover:hover) and (pointer:fine){html.motion .cur{display:block}}
 .cur.big{width:64px;height:64px;margin:-32px 0 0 -32px;background:rgba(198,244,50,.2)}
 @media (prefers-reduced-motion: reduce){.intro,.curtain,.cur,.sp{display:none!important}}
+
+/* ---- tip of the day: one fresh tip a day ---- */
+.tk-label{gap:0;padding:0 14px 0 20px}
+.tk-dot{width:7px;height:7px;border-radius:50%;background:var(--acc);margin-right:10px;animation:tkp 2.6s ease-out infinite}
+@keyframes tkp{0%{box-shadow:0 0 0 0 rgba(198,244,50,.55)}70%,100%{box-shadow:0 0 0 8px rgba(198,244,50,0)}}
+.tk-date{margin-left:12px;padding-left:12px;border-left:1px solid rgba(250,243,220,.22);color:rgba(250,243,220,.7);letter-spacing:.1em;font-weight:500}
+.tk-text{display:block;white-space:nowrap;padding:0 4px 0 34px;font-family:var(--display);font-style:italic;font-size:14.5px;line-height:36px;color:var(--bg);opacity:0;transform:translateY(8px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.8,.2,1)}
+.tk-text.in{opacity:1;transform:none}
+.tk-pan{display:inline-flex;align-items:center;gap:12px;will-change:transform}
+.tk-pan.go{animation:tkpan var(--pd,12s) ease-in-out infinite alternate}
+.ticker:hover .tk-pan.go{animation-play-state:paused}
+@keyframes tkpan{0%,12%{transform:translateX(0)}88%,100%{transform:translateX(var(--shift,0))}}
+.tk-cat{font:700 9px var(--mont);font-style:normal;letter-spacing:.16em;text-transform:uppercase;color:var(--acc-ink);background:var(--acc);border-radius:999px;padding:3px 9px;line-height:1.3}
+.tk-nav{flex:none;display:flex;gap:5px;padding:0 16px 0 10px;position:relative;z-index:2}
+.tk-nav button{width:22px;height:22px;border-radius:50%;border:1px solid rgba(250,243,220,.28);background:transparent;color:var(--bg);font-size:15px;line-height:1;padding:0 0 2px;cursor:pointer;transition:background .2s,color .2s,border-color .2s}
+.tk-nav button:hover{background:var(--acc);color:var(--acc-ink);border-color:var(--acc)}
+.tk-short{display:none}
+@media (max-width:640px){.tk-date,.tk-cat,.tk-nav,.tk-long{display:none}.tk-short{display:inline}.tk-label{padding:0 10px 0 16px}.tk-text{font-size:13.5px;padding-left:26px}}
+@media (prefers-reduced-motion: reduce){.tk-text{white-space:normal;line-height:1.35;transition:none;opacity:1;transform:none}.tk-pan{display:inline}.tk-dot{animation:none}}
 </style>
 </head>
 <body>
@@ -668,7 +662,7 @@ html.intro-on .intro{display:grid;animation:introSafe .01s 4.5s forwards}
       <button class="btn-white" type="button" data-open="contact">Contact Us</button>
     </div>
   </div>
-  <div class="ticker" aria-label="Tip of the day"><div class="tk-label">Tip of the day</div><div class="tk-view"><div class="tk-track" id="tk-track"></div></div></div>
+  <div class="ticker" aria-label="Tip of the day"><div class="tk-label"><i class="tk-dot"></i><span class="tk-long">Tip of the day</span><span class="tk-short">Tip</span><span class="tk-date" id="tk-date"></span></div><div class="tk-view"><div class="tk-text" id="tk-text" aria-live="polite"></div></div><div class="tk-nav"><button type="button" id="tk-prev" aria-label="Previous tip">‹</button><button type="button" id="tk-next" aria-label="Next tip">›</button></div></div>
 </header>
 
 <div class="bd" id="menu-bd"></div>
@@ -684,7 +678,6 @@ html.intro-on .intro{display:grid;animation:introSafe .01s 4.5s forwards}
       <button type="button" data-go="home" data-scroll="pricing">Pricing</button>
       <button type="button" data-go="order">Your order</button>
       <button type="button" data-go="track">Track order</button>
-      <button type="button" data-go="home" data-scroll="business">For businesses</button>
     </nav>
   </div>
   <div>
@@ -733,8 +726,8 @@ html.intro-on .intro{display:grid;animation:introSafe .01s 4.5s forwards}
         <div class="hero2-text">
           <div class="offer-pill" id="offer-hero" hidden></div>
           <h1>Fresh microgreens, grown in Bengaluru and cut for you.</h1>
-          <p class="h-sub">Ten varieties, harvested to order and delivered in the time slot you choose. For homes, restaurants and hotels.</p>
-          <div class="cta-row"><button class="cta" type="button" data-go="catalog">Shop the catalog <svg class="i" viewBox="0 0 24 24"><path d="M5 12h14m-7-7 7 7-7 7"/></svg></button><button class="cta-ghost" type="button" data-go="home" data-scroll="business">For businesses</button></div>
+          <p class="h-sub">Ten varieties, harvested to order and delivered in the time slot you choose.</p>
+          <div class="cta-row"><button class="cta" type="button" data-go="catalog">Shop the catalog <svg class="i" viewBox="0 0 24 24"><path d="M5 12h14m-7-7 7 7-7 7"/></svg></button><button class="cta-ghost" type="button" data-go="home" data-scroll="pricing">See pricing</button></div>
         </div>
         <div class="hero2-stage"><div class="pt" id="hero-pt" role="img" aria-label="A real tray of beetroot microgreens"></div><div class="now mono">Now growing: <span id="now">Beetroot</span></div></div>
       </div>
@@ -764,32 +757,6 @@ html.intro-on .intro{display:grid;animation:introSafe .01s 4.5s forwards}
         </div>
         <div class="plans" id="plans"></div>
         <p class="pr-note">These are starting prices. The exact price of each variety is shown in the catalog when you pick it.</p>
-      </div>
-    </section>
-
-    <section class="biz" id="business">
-      <div class="wrap biz-grid">
-        <div class="biz-text">
-          <p class="kicker">For businesses</p>
-          <h2>Microgreens for restaurants, cafés and hotels</h2>
-          <p class="lead">Consistent quality, cut fresh for your delivery day. Tell us what you need and how often, and we will come back with a quote.</p>
-          <ul class="biz-list">
-            <li><i>✓</i><span>Weekly standing orders, or one-off events and tastings</span></li>
-            <li><i>✓</i><span>Quantities well above 1 kg, priced by variety</span></li>
-            <li><i>✓</i><span>Cut fresh for your delivery day, in the time slot you need</span></li>
-            <li><i>✓</i><span>You speak to us directly, the people who grow your greens</span></li>
-          </ul>
-        </div>
-        <div class="biz-card">
-          <h3>Request a quote</h3>
-          <p class="sub2">A few details and we will get back to you.</p>
-          <div class="bz-row"><div class="field"><label for="bz-biz">Business name</label><input id="bz-biz" autocomplete="organization"></div><div class="field"><label for="bz-name">Your name</label><input id="bz-name" autocomplete="name"></div></div>
-          <div class="bz-row"><div class="field"><label for="bz-phone">Phone or WhatsApp</label><input id="bz-phone" type="tel" inputmode="tel" autocomplete="tel"></div><div class="field"><label for="bz-mail">Email</label><input id="bz-mail" type="email" autocomplete="email"></div></div>
-          <div class="field"><label for="bz-type">Type of business</label><select id="bz-type"><option>Restaurant</option><option>Café</option><option>Hotel</option><option>Caterer or events</option><option>Grocery or retail</option><option>Other</option></select></div>
-          <div class="field"><label for="bz-need">What do you need, and how often?</label><textarea id="bz-need" rows="3" placeholder="e.g. 2 kg of mixed microgreens every Monday and Thursday"></textarea></div>
-          <button class="btn-flavor" type="button" id="bz-go" style="margin-top:16px">Request a quote</button>
-          <p class="bz-msg" id="bz-msg" role="status"></p>
-        </div>
       </div>
     </section>
 
@@ -908,7 +875,7 @@ html.intro-on .intro{display:grid;animation:introSafe .01s 4.5s forwards}
       <div class="f-links">
         <div><h4>Shop</h4><ul><li><button type="button" data-go="catalog">Catalog</button></li><li><button type="button" data-go="home" data-scroll="pricing">Pricing</button></li><li><button type="button" data-go="order">Your order</button></li><li><button type="button" data-go="track">Track order</button></li></ul></div>
         <div><h4>Varieties</h4><ul><li><button type="button" data-var="0">Radish</button></li><li><button type="button" data-var="1">Sunflower</button></li><li><button type="button" data-var="4">Pea</button></li><li><button type="button" data-var="6">Beetroot</button></li></ul></div>
-        <div class="wide"><h4>Get in touch</h4><ul><li><button type="button" data-open="contact">Contact us</button></li><li><button type="button" data-go="home" data-scroll="business">For businesses</button></li><li id="f-wa" hidden><a id="f-wa-a" href="#" target="_blank" rel="noopener">Order on WhatsApp</a></li></ul></div>
+        <div class="wide"><h4>Get in touch</h4><ul><li><button type="button" data-open="contact">Contact us</button></li><li id="f-wa" hidden><a id="f-wa-a" href="#" target="_blank" rel="noopener">Order on WhatsApp</a></li></ul></div>
       </div>
     </div>
     <div class="f-rule f-item" style="--i:3"></div>
@@ -1267,23 +1234,6 @@ $("#cm-go").addEventListener("click", function(){
 });
 
 
-/* ============ business enquiries ============ */
-$("#bz-go").addEventListener("click", function(){
-  var biz = $("#bz-biz").value.trim(), nm = $("#bz-name").value.trim(), ph = $("#bz-phone").value.trim(), ml = $("#bz-mail").value.trim(), ty = $("#bz-type").value, need = $("#bz-need").value.trim(), msg = $("#bz-msg"), b = this;
-  function say(m, c){ msg.textContent = m; msg.className = "bz-msg" + (c ? " " + c : ""); }
-  var okM = /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(ml), okP = ph.replace(/\D/g, "").length >= 10;
-  if (!biz || !nm) { say("Please add your business name and your name.", "bad"); return; }
-  if (!okP && !okM) { say("Please add a phone number or an email so we can reach you.", "bad"); return; }
-  if (!need) { say("Please tell us briefly what you need and how often.", "bad"); return; }
-  if (!ORDER_URL) { if (WHATSAPP) { window.open(waLink("Hi Grownezzz, business enquiry from " + biz + " (" + nm + ", " + (ph || ml) + "). Type: " + ty + ". Need: " + need), "_blank", "noopener"); return; } say("Quote requests open once the site is connected.", "bad"); return; }
-  b.disabled = true; say("");
-  callApi("b2b", {business:biz, name:nm, phone:ph, email:ml, type:ty, need:need}).then(function(r){
-    if (!r || !r.ok) throw new Error("bad");
-    say("Thank you, " + nm.split(" ")[0] + ". We have your request and will get back to you soon.", "good"); track("generate_lead", {method:"b2b"});
-    ["bz-biz", "bz-name", "bz-phone", "bz-mail", "bz-need"].forEach(function(id){ $("#" + id).value = ""; });
-  }).catch(function(){ say("We could not send that. Please try again, or use Talk to us.", "bad"); }).then(function(){ b.disabled = false; });
-});
-
 /* ============ pricing rows ============ */
 var PLANS = [
   {name:"Starter", desc:"Perfect for trying a variety or two.", price:rupee(priceFor(100)), cap:"100 g pack", g:100, ic:"sun",
@@ -1620,26 +1570,129 @@ $("#done-track").addEventListener("click", function(){
   $("#t-id").value = this.dataset.id || ""; $("#t-phone").value = this.dataset.phone || ""; $("#t-res").hidden = true; show("track"); trackLookup();
 });
 
-/* ============ tip of the day ============ */
-var TIPS = [
-  "Keep them dry. Wash only just before you eat, and store the box in the fridge so the stems stay crisp.",
-  "Add microgreens at the very end. Sprinkle them over hot dal, soup or eggs just before serving so they stay fresh and crunchy.",
-  "Want heat? Put a pinch of mustard or radish on a sandwich. Want something mild and sweet? Go for pea or sunflower.",
-  "Blend a handful of sunflower or pea shoots into your morning smoothie for a light, nutty taste.",
-  "After rinsing, pat them dry and keep a folded paper towel in the box. It soaks up extra moisture and slows spoilage."
-];
+/* ============ tip of the day: a different tip every day, then a refined single line ============ */
+var TIPLISTS = {
+  "Storage": [
+    "Keep them dry: wash only just before you eat, and store the box in the fridge.",
+    "A folded paper towel in the box soaks up extra moisture and slows spoilage.",
+    "Don't pack microgreens down. Air around the leaves keeps them crisp for longer.",
+    "If condensation forms inside the box, pat the lid dry and let the greens breathe for a minute.",
+    "Use the delicate greens first, like pea shoots and amaranth, and keep sturdy sunflower for later.",
+    "Keep the box away from the fridge door, where the temperature changes the most.",
+    "Don't store microgreens next to ripe fruit like bananas. Ripening gas can wilt greens sooner.",
+    "Cut only what you need: microgreens are best eaten soon after they are cut.",
+    "Slightly limp? A few minutes in cold water can perk up the stems. Pat dry well afterwards.",
+    "Never leave microgreens in a hot car or bag. Heat makes them wilt fast.",
+    "Delivery day tip: put the box in the fridge as soon as it arrives.",
+    "Fresh is best: use your microgreens within a few days of delivery.",
+    "Pat them dry with a clean cloth or paper towel. Dry leaves keep their crunch.",
+    "Rinse gently in a bowl of cool water and avoid scrubbing, so the stems stay unbruised.",
+    "Take them out of the fridge a few minutes before serving for the fullest flavour."
+  ],
+  "Recipe": [
+    "Add microgreens at the very end: sprinkle over hot dal, soup or eggs just before serving.",
+    "Radish microgreens on a cheese sandwich add a peppery crunch.",
+    "Fold pea shoots into a stir-fry in the last 30 seconds so they stay bright green.",
+    "Blend a handful of sunflower or pea shoots into a smoothie for a light, nutty taste.",
+    "Top avocado toast with mustard microgreens for a sharp, tangy bite.",
+    "Scatter beetroot microgreens over hummus for colour and an earthy flavour.",
+    "Stir chopped fenugreek microgreens into dough for parathas, for a quick methi flavour.",
+    "Make a quick pesto with sunflower or pea shoots instead of basil.",
+    "Layer red cabbage microgreens in a wrap for colour and a mild crunch.",
+    "Finish a bowl of curd rice with a few radish microgreens for fresh heat.",
+    "Press a few microgreens into an omelette just before folding it.",
+    "Garnish pizza with microgreens straight out of the oven, not before baking.",
+    "Toss microgreens with lemon juice and olive oil for a two-minute salad.",
+    "Pair amaranth microgreens with paneer or grilled vegetables for a bright, colourful plate.",
+    "Add broccoli microgreens to a sandwich or salad for a mild, fresh crunch.",
+    "Top a bowl of soup with chia microgreens for a light, slightly tangy finish.",
+    "Wrap microgreens inside a dosa or chilla just before folding.",
+    "Mix a few mustard microgreens into potato salad for a gentle kick.",
+    "Garnish a cool cucumber raita with pea shoots.",
+    "Layer microgreens on buttered toast with a pinch of salt for the simplest snack.",
+    "Roll radish microgreens into a chapati with paneer for a peppery edge.",
+    "Mix beetroot microgreens into a yogurt dip for a pretty pink and green contrast.",
+    "Serve broccoli microgreens with grilled fish or chicken as a light green side.",
+    "Blend mustard microgreens into a green chutney for extra bite.",
+    "Add fenugreek microgreens to a vegetable soup at the end for a fresh methi note.",
+    "Use amaranth microgreens on a cheese platter for colour.",
+    "Top idli with a pinch of sunflower microgreens and podi for a modern twist.",
+    "Try red cabbage microgreens in tacos or kathi rolls for crunch.",
+    "Stack pea shoots on a tomato slice with a drop of olive oil for a simple starter.",
+    "Top scrambled eggs or egg bhurji with mustard microgreens for a fresh bite.",
+    "Make a green smoothie with banana, curd and a handful of pea shoots.",
+    "Try pea shoots in vegetable fried rice, added right at the end.",
+    "Lunchbox tip: pack microgreens in a small separate container and add them just before eating.",
+    "Add sunflower microgreens to a veg sandwich for juicy crunch."
+  ],
+  "Variety": [
+    "Radish: crunchy and peppery with pink stems. Lovely on sandwiches and eggs.",
+    "Sunflower: nutty and juicy with thick, crisp shoots. A great base for salads.",
+    "Broccoli: mild and fresh, a little like cabbage. Easy for first-timers.",
+    "Mustard: sharp and spicy. A small handful wakes up a plate.",
+    "Pea: sweet and tender, it tastes like fresh peas.",
+    "Chia: light and slightly tangy, with tiny soft leaves.",
+    "Beetroot: earthy and mild, with deep red stems that look beautiful on a plate.",
+    "Red cabbage: mild cabbage flavour with purple stems. Pretty and crunchy.",
+    "Fenugreek: slightly bitter, with the familiar methi smell.",
+    "Amaranth: soft and earthy, with magenta-red leaves.",
+    "New to microgreens? Start with sunflower or pea: sweet, mild and easy to love.",
+    "Like it hot? Try mustard or radish. Like it mild? Try broccoli or pea.",
+    "Mix two or three varieties in one bowl for different colours, textures and flavours.",
+    "Colour tip: beetroot and amaranth bring red tones, pea and sunflower bring bright greens.",
+    "Pair radish with eggs, mustard with potatoes, pea with rice, and sunflower with almost anything.",
+    "For mild flavour, pick the small-leaved varieties: broccoli, chia and red cabbage.",
+    "Fenugreek tastes best in small amounts. Mix it with milder greens.",
+    "Not sure where to start? A handful of mixed microgreens on any dish is a good first step."
+  ],
+  "Know-how": [
+    "Ours are cut to order, so what reaches you was growing only a short time ago.",
+    "Pick your delivery slot at checkout, and your greens arrive in the time slot you chose.",
+    "Look for firm, upright stems and bright leaves: that is microgreens at their best.",
+    "A light, grassy smell is normal. A sour smell means they are past their best.",
+    "Microgreens are the young shoots of vegetable and herb seeds, eaten when the first small leaves appear.",
+    "Tiny but full of flavour: a few leaves go a long way.",
+    "Eat the whole thing: stems and leaves are both tender and edible.",
+    "Microgreens are not sprouts. They grow in a growing medium and are eaten as young shoots with leaves.",
+    "A small handful per meal is plenty. They add colour, crunch and flavour without a heavy bite.",
+    "Little leaves, big colour: a few microgreens make an everyday meal look special.",
+    "Use kitchen scissors to snip microgreens straight onto the plate.",
+    "Add salt and lemon only just before eating, so the leaves stay crisp.",
+    "Dressings wilt tender leaves. Dress them lightly, and just before serving.",
+    "Serve microgreens beside rich dishes. Their freshness balances heavy flavours.",
+    "Plating tip: a small pile in the centre looks neater than a scatter.",
+    "Mustard microgreens lose some of their bite when cooked, so add them raw at the end.",
+    "Radish microgreens are sharpest raw. A few go a long way.",
+    "Wash your hands and bowl before handling. Microgreens are eaten raw.",
+    "A handful per person is a generous serving.",
+    "Questions about storing or cooking? Use the Talk to us button. We are happy to help."
+  ]
+};
+var TIPLIST = (function(){ var all = [];
+  Object.keys(TIPLISTS).forEach(function(k){ var l = TIPLISTS[k]; l.forEach(function(x, i){ all.push({k:k, x:x, p:(i + .5) / l.length}); }); });
+  all.sort(function(a, b){ return a.p - b.p || (a.k < b.k ? -1 : 1); });   /* each group is spread evenly across the whole cycle, so neighbouring days rarely feel alike */
+  return all.map(function(o){ return [o.k, o.x]; }); })();
 (function(){
-  var tip = TIPS[Math.floor(Date.now() / 86400000) % TIPS.length], tr = $("#tk-track");
-  var item = '<span class="tk-item"><i>✦</i>' + esc(tip) + '</span>';
-  if (reduce) { tr.innerHTML = item; return; }
-  function build(){
-    tr.style.animation = "none"; tr.innerHTML = item;
-    var w = tr.scrollWidth || 600, per = Math.max(2, Math.ceil(window.innerWidth * 1.3 / w) + 1);
-    var half = ""; for (var i = 0; i < per; i++) half += item;
-    tr.innerHTML = half + half; tr.style.setProperty("--tk-dur", Math.max(30, (tr.scrollWidth / 2) / 55) + "s"); tr.style.animation = "";
+  var N = TIPLIST.length, off = 0, box = $("#tk-text"), view = $(".tk-view"), cat = null, last = -1;
+  function dayNum(){ var d = new Date(); return Math.floor((Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) - Date.UTC(2026, 0, 1)) / 864e5); }
+  function render(){
+    var n = dayNum() + off, idx = ((n % N) + N) % N, t = TIPLIST[idx], d = new Date(); d.setDate(d.getDate() + off); last = dayNum();
+    $("#tk-date").textContent = off === 0 ? d.toLocaleDateString("en-IN", {weekday:"short", day:"numeric", month:"short"}) : "Tip " + (idx + 1) + " of " + N;
+    box.classList.remove("in"); box.innerHTML = '<span class="tk-pan"><span class="tk-cat">' + esc(t[0]) + '</span><span class="tk-txt">' + esc(t[1]) + '</span></span>';
+    void box.offsetWidth; box.classList.add("in"); fit();
   }
-  build(); if (document.fonts && document.fonts.ready) document.fonts.ready.then(build);
-  var rt2; window.addEventListener("resize", function(){ clearTimeout(rt2); rt2 = setTimeout(build, 250); });
+  function fit(){
+    var pan = box.querySelector(".tk-pan"); if (!pan) return; pan.classList.remove("go"); pan.style.removeProperty("--shift");
+    if (reduce) return;
+    var over = pan.scrollWidth - (view.clientWidth - 20);
+    if (over > 4) { pan.style.setProperty("--shift", (-over - 16) + "px"); pan.style.setProperty("--pd", Math.max(7, over / 26) + "s"); setTimeout(function(){ pan.classList.add("go"); }, 900); }
+  }
+  render(); if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
+  var rt; window.addEventListener("resize", function(){ clearTimeout(rt); rt = setTimeout(fit, 250); });
+  $("#tk-prev").addEventListener("click", function(){ off--; render(); }); $("#tk-next").addEventListener("click", function(){ off++; render(); });
+  function check(){ if (dayNum() !== last && off === 0) render(); }
+  setInterval(check, 60000); document.addEventListener("visibilitychange", function(){ if (!document.hidden) check(); });
+  window.__tips = {list:TIPLIST, N:N};
 })();
 $$(".from-price").forEach(function(el){ el.textContent = rupee(priceFor(100)); });
 
@@ -1754,9 +1807,9 @@ var first = location.hash.slice(1); show(VIEWS.indexOf(first) >= 0 ? first : "ho
   var heroEls = [];
   $$(".hero2 .offer-pill, .hero2 .h-sub, .hero2 .cta-row").forEach(function(e, i){ e.classList.add("rv"); e.style.setProperty("--rd", (.35 + i * .14) + "s"); heroEls.push(e); });
   var h1 = $(".hero2 h1"); split(h1); heroEls.push(h1);
-  ["#business h2", ".strip-head h2", ".pr-head h2", ".how .strip-head h2", ".f-news h3", "#v-catalog .sec-h", "#v-order .sec-h", "#v-track .sec-h"].forEach(function(s){ $$(s).forEach(split); });
+  [".strip-head h2", ".pr-head h2", ".how .strip-head h2", ".f-news h3", "#v-catalog .sec-h", "#v-order .sec-h", "#v-track .sec-h"].forEach(function(s){ $$(s).forEach(split); });
   mark(".strip-head .kicker", 0); mark(".tcard", .13); mark(".pr-head .eyebrow", 0); mark(".pr-head .offer-pill", .1); mark(".pr-head p", .18); mark(".pr-note", 0);
-  mark(".biz .kicker", 0); mark(".biz .lead", .18); mark(".biz-list li", .12); mark(".biz-card", .25); mark(".steps3 li", .14); mark("#v-catalog .sub", .12); mark(".buy", .25); mark(".f-news-t .f-lead", .15);
+  mark(".steps3 li", .14); mark("#v-catalog .sub", .12); mark(".buy", .25); mark(".f-news-t .f-lead", .15);
   var io = ("IntersectionObserver" in window) ? new IntersectionObserver(function(es){ es.forEach(function(en){ if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); } }); }, {threshold:.14, rootMargin:"0px 0px -6% 0px"}) : null;
   $$(".rv, .split").forEach(function(e){ if (heroEls.indexOf(e) > -1) return; if (io) io.observe(e); else e.classList.add("in"); });
   R.classList.add("motion");
